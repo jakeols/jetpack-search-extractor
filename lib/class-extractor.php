@@ -3,7 +3,7 @@
  *
  * Extracts data on update, save, and delete
  *
- * @package WPDiscourseLogin
+ * @package JPSearchExtractor
  */
 
 namespace JPSearchExtractor\Extractor;
