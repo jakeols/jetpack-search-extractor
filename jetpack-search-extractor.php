@@ -11,3 +11,4 @@
 
 require_once __DIR__ . '/lib/class-extractor.php';
 require_once __DIR__ . '/lib/class-utilities.php';
+require_once __DIR__ . '/admin/options.php';
