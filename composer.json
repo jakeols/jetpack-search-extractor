@@ -1,0 +1,19 @@
+{
+	"name": "jakeols/jetpack-search-extractor",
+	"description": "Extract any post meta into searchable fields",
+	"type": "wordpress-plugin",
+	"support": {
+		"issues": "https://github.com/jakeols/jetpack-search-extractor/issues"
+	},
+	"require-dev": {
+        "dealerdirect/phpcodesniffer-composer-installer": "*",
+        "object-calisthenics/phpcs-calisthenics-rules": "*",
+        "phpcompatibility/php-compatibility": "*",
+        "wp-coding-standards/wpcs": "*"
+	},
+	"scripts": {
+		"php:lint": "vendor/bin/phpcs --standard=WordPress -p -s",
+		"php:autofix": "vendor/bin/phpcbf --standard=WordPress",
+		"php:lint:errors": "vendor/bin/phpcs --standard=WordPress -p -s --runtime-set ignore_warnings_on_exit 1"
+	}
+}
