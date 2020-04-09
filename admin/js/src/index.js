@@ -1,4 +1,13 @@
-import './style';
-import App from './components/app';
+let poly = require("preact-cli/lib/lib/webpack/polyfills");
 
-export default App;
+import { h } from "preact";
+import habitat from "preact-habitat";
+
+import Widget from "./components/hello-world";
+
+let _habitat = habitat(Widget);
+
+_habitat.render({
+  selector: '#jpsextractor-preact-app',
+  clean: true
+});
