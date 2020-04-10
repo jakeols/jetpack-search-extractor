@@ -28,7 +28,7 @@ export default class PageItem extends Component {
                         {meta.map((key, i) =>
                         <div>
                             <input type="checkbox" id={i} name={key} value={key} />
-                            <p key={i}>{key}</p>
+                            <label for={i} key={i}>{key}</label>
                         </div>
                         )}
                     </div>
