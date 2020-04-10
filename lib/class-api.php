@@ -56,25 +56,42 @@ class API {
 		return get_fields($ID);
 	}
 
+	/**
+	 * @TODO move to util, 
+	 */
+	function starts_with ($string, $startString) { 
+		$len = strlen($startString); 
+		return (substr($string, 0, $len) === $startString); 
+	} 
+  
+
 
 	/**
 	 * this should have the field info 
 	 */
 	public function process_fields($object) {
 		$page_id = $object['id'];
-		$meta_fields = $object['fields']; // should beset to fields
+		$meta_fields = $object['fields']; 
 
-		// loop through each post meta field, get content, and put it into a string
-		$final_string = '';
+		$res = get_post_meta($object['id']);
 
-		foreach ($meta_fields as $key => $value) { //@TODO fix this
-			$myvalues = get_post_meta($post->ID, $value, true); //using 'true' here is vital
-			foreach ($myvalues as $myvalue) {
-				 $final_string .= $myvalue;
+		$final = '';
+
+		// @TODO find a better way to get these objects
+		foreach($meta_fields as $key => $value){
+			$search = $value;
+			$search_length = strlen($search);
+			foreach ($res as $key2 => $value2) {
+				if (substr($key2, 0, $search_length) == $search) {
+					$test .= implode($value2);
+					$final .= $test;
+				}
 			}
 		}
+		// @TODO maybe keep track if addition fails
+		update_post_meta($page_id, 'jpsearchextractor_fields', $object['fields']);
 
-		return  $final_string; // @TODO -> these need real API responsess
+		 return array("original" => $res, "response" => $final); // @TODO -> these need real API responsess
 	}
 
 

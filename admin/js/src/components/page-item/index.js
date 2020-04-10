@@ -6,6 +6,7 @@ export default class PageItem extends Component {
         super(props);
         this.state = {
             editSelected: false,
+            selectedMeta: [],
         }
     }
 
@@ -22,12 +23,10 @@ export default class PageItem extends Component {
      * rest api (process it by saving into meta)
      */
     saveMeta = () => {
-        // send to api -> using "hero, card_meta" as default for now 
-        const data = { fields: ["hero", "card_meta"] };
-
+        const data = { fields: this.state.selectedMeta };
+        console.log(data);
         // rest api url that has been created is: /wp-json/jpsearchextractor/v1/meta/{id}
-
-        fetch('/wp-json/jpsearchextractor/v1/meta/112', {
+        fetch(`/wp-json/jpsearchextractor/v1/meta/${this.props.data.id}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -43,6 +42,12 @@ export default class PageItem extends Component {
         });
     }
 
+    handleMetaClick = (e) => {
+        this.setState(previousState => ({
+            selectedMeta: [...previousState.selectedMeta, e.target.value]
+        }));
+    }
+
     RenderEdits = () => {
         if(this.state.editSelected){
             const meta = Object.keys(this.props.data.ACF);
@@ -53,7 +58,7 @@ export default class PageItem extends Component {
                     <div>
                         {meta.map((key, i) =>
                         <div>
-                            <input type="checkbox" id={i} name={key} value={key} />
+                            <input type="checkbox" onClick={this.handleMetaClick} id={i} name={key} value={key} />
                             <label for={i} key={i}>{key}</label>
                         </div>
                         )}
