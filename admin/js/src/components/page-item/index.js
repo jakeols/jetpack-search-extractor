@@ -19,9 +19,20 @@ export default class PageItem extends Component {
 
     RenderEdits = () => {
         if(this.state.editSelected){
+            const meta = Object.keys(this.props.data.ACF);
+            console.log(meta);
             return (
                 <div>
-                    <div>can edit</div>
+                    <div>Select which keys you would like added to the index:</div>
+                    <div>
+                        {meta.map((key, i) =>
+                        <div>
+                            <input type="checkbox" id={i} name={key} value={key} />
+                            <p key={i}>{key}</p>
+                        </div>
+                        )}
+                    </div>
+                    <button>Save</button>
                     <button onClick={this.handleCloseButtonClick}>Cancel</button>
                 </div>
             )
