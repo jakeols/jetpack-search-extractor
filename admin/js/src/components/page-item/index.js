@@ -17,6 +17,32 @@ export default class PageItem extends Component {
         this.setState({editSelected: false});
     }
 
+    /**
+     * this will send the meta to our 
+     * rest api (process it by saving into meta)
+     */
+    saveMeta = () => {
+        // send to api -> using "hero, card_meta" as default for now 
+        const data = { fields: ["hero", "card_meta"] };
+
+        // rest api url that has been created is: /wp-json/jpsearchextractor/v1/meta/{id}
+
+        fetch('/wp-json/jpsearchextractor/v1/meta/112', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+        console.log('Success:', data);
+        })
+        .catch((error) => {
+        console.error('Error:', error);
+        });
+    }
+
     RenderEdits = () => {
         if(this.state.editSelected){
             const meta = Object.keys(this.props.data.ACF);
@@ -32,7 +58,7 @@ export default class PageItem extends Component {
                         </div>
                         )}
                     </div>
-                    <button>Save</button>
+                    <button onClick={this.saveMeta}>Save</button>
                     <button onClick={this.handleCloseButtonClick}>Cancel</button>
                 </div>
             )

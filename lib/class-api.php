@@ -17,10 +17,19 @@ class API {
 	 * Constructor
 	 */
 	public function __construct() {
+		// handler for returning meta
 		add_action( 'rest_api_init', function () {
 			register_rest_route( 'jpsearchextractor/v1', '/page/(?P<id>\d+)', array(
 			  'methods' => 'GET',
 			  'callback' => array( $this, 'get_meta'),
+			) );
+		  } );
+
+		  // post handler for saving meta
+		  add_action( 'rest_api_init', function () {
+			register_rest_route( 'jpsearchextractor/v1', '/meta/(?P<id>\d+)', array( // this is the page ID to update
+			  'methods' => 'POST',
+			  'callback' => array($this, 'process_fields'),
 			) );
 		  } );
 	}
@@ -45,6 +54,27 @@ class API {
 	public function expose_ACF_fields( $object ) {
 		$ID = $object['id'];
 		return get_fields($ID);
+	}
+
+
+	/**
+	 * this should have the field info 
+	 */
+	public function process_fields($object) {
+		$page_id = $object['id'];
+		$meta_fields = $object['fields']; // should beset to fields
+
+		// loop through each post meta field, get content, and put it into a string
+		$final_string = '';
+
+		foreach ($meta_fields as $key => $value) { //@TODO fix this
+			$myvalues = get_post_meta($post->ID, $value, true); //using 'true' here is vital
+			foreach ($myvalues as $myvalue) {
+				 $final_string .= $myvalue;
+			}
+		}
+
+		return  $final_string; // @TODO -> these need real API responsess
 	}
 
 

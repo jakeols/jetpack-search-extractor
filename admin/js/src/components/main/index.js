@@ -15,7 +15,7 @@ export default class Main extends Component {
 
     updatePages = (data) => {
         // check data
-
+        console.log(data);
         // set states
         this.setState({pages: data});
     }
