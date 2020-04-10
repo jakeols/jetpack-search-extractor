@@ -82,16 +82,22 @@ class API {
 			$search = $value;
 			$search_length = strlen($search);
 			foreach ($res as $key2 => $value2) {
-				if (substr($key2, 0, $search_length) == $search) {
+				if (substr($key2, 0, $search_length) == $search) { // match
 					$test .= implode($value2);
-					$final .= $test;
+					if($test !== ''){
+						$final .= preg_replace('/{(.*?)}/', '', strip_tags($test));
+					}
 				}
 			}
 		}
 		// @TODO maybe keep track if addition fails
 		update_post_meta($page_id, 'jpsearchextractor_fields', $object['fields']);
 
-		 return array("original" => $res, "response" => $final); // @TODO -> these need real API responsess
+		// add this string to key: jetpack-search-meta0 @TODO maybe determine if meta should beheld differently
+		if(update_post_meta($page_id, 'jetpack-search-meta0', $final) == false){
+			return array("response" => 400);
+		}
+		return array("response" => 200);  // @TODO -> these need real API responsess
 	}
 
 

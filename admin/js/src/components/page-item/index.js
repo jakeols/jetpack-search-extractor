@@ -7,6 +7,7 @@ export default class PageItem extends Component {
         this.state = {
             editSelected: false,
             selectedMeta: [],
+            showSuccessMessage: false,
         }
     }
 
@@ -35,7 +36,9 @@ export default class PageItem extends Component {
         })
         .then((response) => response.json())
         .then((data) => {
-        console.log('Success:', data);
+            if(data.response === 200){
+                this.setState({showSuccessMessage: true, editSelected: false});
+            }
         })
         .catch((error) => {
         console.error('Error:', error);
@@ -80,6 +83,9 @@ export default class PageItem extends Component {
         return (
             <div>
                 <p>{this.props.data.title.rendered}</p>
+                {this.state.showSuccessMessage &&
+                    <p>Your post meta was successfully updated!</p>
+                }
                 <this.RenderEdits />
             </div>
         )
