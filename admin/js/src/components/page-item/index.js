@@ -25,7 +25,6 @@ export default class PageItem extends Component {
      */
     saveMeta = () => {
         const data = { fields: this.state.selectedMeta };
-        console.log(data);
         // rest api url that has been created is: /wp-json/jpsearchextractor/v1/meta/{id}
         fetch(`/wp-json/jpsearchextractor/v1/meta/${this.props.data.id}`, {
         method: 'POST',
@@ -54,7 +53,6 @@ export default class PageItem extends Component {
     RenderEdits = () => {
         if(this.state.editSelected){
             const meta = Object.keys(this.props.data.ACF);
-            console.log(meta);
             return (
                 <div>
                     <div>Select which keys you would like added to the index:</div>

@@ -11,7 +11,7 @@ namespace JPSearchExtractor\API;
 /**
  * Class Extractor
  */
-class API {
+class API { // @TODO add authentication so searches can't be overriden
 
     /**
 	 * Constructor
@@ -32,6 +32,7 @@ class API {
 			  'callback' => array($this, 'process_fields'),
 			) );
 		  } );
+		  
 	}
 	
 
@@ -77,19 +78,29 @@ class API {
 
 		$final = '';
 
+		$keys = [];
+
 		// @TODO find a better way to get these objects
 		foreach($meta_fields as $key => $value){
 			$search = $value;
 			$search_length = strlen($search);
 			foreach ($res as $key2 => $value2) {
 				if (substr($key2, 0, $search_length) == $search) { // match
-					$test .= implode($value2);
-					if($test !== ''){
-						$final .= preg_replace('/{(.*?)}/', '', strip_tags($test));
-					}
+					array_push($keys, $key2);
 				}
 			}
 		}
+
+		// now get all data from matching keys
+		foreach ($keys as $key => $value) {
+			$test = implode($res[$value]);
+			if($test){
+				$final .= strip_tags(preg_replace('/{(.*?)}/', '', $test));
+			}
+		}
+
+		
+		return $final;
 		// @TODO maybe keep track if addition fails
 		update_post_meta($page_id, 'jpsearchextractor_fields', $object['fields']);
 

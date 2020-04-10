@@ -29,6 +29,9 @@ class Extractor {
 
 	// @TODO 
 	function jpsextractor_maybe_require_search_extraction( $meta_id, $post_id, $meta_key, $meta_value ) {
+		// fields kept in jpsearchextractor_fields
+		
+
 		if ( ! in_array( $meta_key, [ /* list of content keys go here */ ], true ) ) { // @TODO this keys should be grabbed from whats selected in dropdown
 			return;
 		}
