@@ -11,6 +11,7 @@
 
 require_once __DIR__ . '/lib/class-extractor.php';
 require_once __DIR__ . '/lib/class-utilities.php';
+require_once __DIR__ . '/lib/class-api.php';
 require_once __DIR__ . '/admin/options.php';
 
 // exposes ACF fields to rest API, @TODO cleanup and move to api class
@@ -37,3 +38,7 @@ function expose_ACF_fields( $object ) {
 }
 
 add_action( 'rest_api_init', 'create_ACF_meta_in_REST' );
+
+// create new API class
+
+new JPSearchExtractor\API\API();

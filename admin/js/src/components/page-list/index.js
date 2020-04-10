@@ -1,5 +1,5 @@
 import { h, Component } from "preact";
-import EditOptions from '../edit-options';
+import PageItem from '../page-item';
 import "./style.scss";
 
 export default class PageList extends Component {
@@ -11,18 +11,13 @@ export default class PageList extends Component {
     }
 
     render(){
-        const pageItems = this.props.data.map((page) => {
-            return (
-                <div className="page-item">
-                    <p>{page.title.rendered}</p>
-                    <button onClick={() => this.setState({selectedPage: page})}>Edit Page</button>
-                </div>
-            );
-        })
         return (
             <div>
-                {pageItems}
-                <EditOptions page={this.state.selectedPage} />
+                {this.props.data.map((page, i) =>
+                <div>
+                    <PageItem data={page} key={i} />
+                </div>
+                )}
             </div>
         )
     }
