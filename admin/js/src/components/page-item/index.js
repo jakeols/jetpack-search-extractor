@@ -30,6 +30,7 @@ export default class PageItem extends Component {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'X-WP-Nonce': window.wpApiSettings.nonce
         },
         body: JSON.stringify(data),
         })
